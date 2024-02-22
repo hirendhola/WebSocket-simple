@@ -77,3 +77,9 @@
   align-items: center;
   gap: 1rem;
 }
+.err {
+  background: white;
+  padding: 3rem;
+  font-size: large;
+  border-radius: 1rem;
+}

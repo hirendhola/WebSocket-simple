@@ -6,13 +6,15 @@ function App() {
   const [showDisclaimer, setShowDisclaimer] = useState(true);
   const messageInputRef = useRef();
   const webSocketRef = useRef(null);
-
+  const [err, setErr] = useState(null)
 
   useEffect(() => {
     webSocketRef.current = new WebSocket("wss://websocketsimple.glitch.me/");
 
     webSocketRef.current.onopen = (event) => {
       console.log("WebSocket connection opened", event.data);
+      setErr(null)
+
     };
 
     webSocketRef.current.onmessage = (event) => {
@@ -21,6 +23,7 @@ function App() {
 
     webSocketRef.current.onclose = (event) => {
       console.log("WebSocket connection closed", event.data);
+      setErr("Server is close/ ask admin to open server")
     };
 
     return () => {
@@ -59,36 +62,40 @@ function App() {
   return (
     <>
       <div className="container">
-
-        <div className="child_container">
-          {showDisclaimer ? (
-            <div className="disclaimer-dialog">
-              <div className="disclaimer-text">
-                <b>Disclaimer:</b> This chat is for demonstration purposes only. Messages are not encrypted, and anyone with access to the communication channel can view the content. Should not be used for sensitive or private information.
-
-              </div>
-              <b>we dont store chat on database</b>
-              <button className="btn" onClick={closeDisclaimer}>
-                <b>Close</b>
-              </button>
-            </div>
-          ) : <div className="chat_container">
-            {messages.map((message, index) => (
-              <p key={index} className="chat">
-                {message}
-              </p>
-            ))}
-          </div>
-          }
-        </div>
         {
-          !showDisclaimer ? <div className="input_container">
-            <input type="text" placeholder="write here" ref={messageInputRef} onKeyDown={handleKeyDown} />
-            <button className="btn" onClick={sendMessage}>
-              Send
-            </button>
-          </div> : null
+          err ? <p className='err'><b>{err}</b></p> : <>
+            <div className="child_container">
+              {showDisclaimer ? (
+                <div className="disclaimer-dialog">
+                  <div className="disclaimer-text">
+                    <b>Disclaimer:</b> This chat is for demonstration purposes only. Messages are not encrypted, and anyone with access to the communication channel can view the content. Should not be used for sensitive or private information.
+
+                  </div>
+                  <b>we dont store chat on database</b>
+                  <button className="btn" onClick={closeDisclaimer}>
+                    <b>Close</b>
+                  </button>
+                </div>
+              ) : <div className="chat_container">
+                {messages.map((message, index) => (
+                  <p key={index} className="chat">
+                    {message}
+                  </p>
+                ))}
+              </div>
+              }
+            </div>
+            {
+              !showDisclaimer ? <div className="input_container">
+                <input type="text" placeholder="write here" ref={messageInputRef} onKeyDown={handleKeyDown} />
+                <button className="btn" onClick={sendMessage}>
+                  Send
+                </button>
+              </div> : null
+            }
+          </>
         }
+
 
       </div>
     </>
