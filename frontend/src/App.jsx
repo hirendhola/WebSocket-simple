@@ -64,7 +64,7 @@ function App() {
           {showDisclaimer ? (
             <div className="disclaimer-dialog">
               <div className="disclaimer-text">
-                <b>Disclaimer:</b> This chat is for demonstration purposes only. Messages are not encrypted, and anyone with access to the communication channel can view the content. This project is designed for beginners to learn about WebSocket communication and should not be used for sensitive or private information.
+                <b>Disclaimer:</b> This chat is for demonstration purposes only. Messages are not encrypted, and anyone with access to the communication channel can view the content. Should not be used for sensitive or private information.
 
               </div>
               <b>we dont store chat on database</b>
