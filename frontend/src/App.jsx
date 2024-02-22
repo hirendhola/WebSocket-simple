@@ -9,7 +9,7 @@ function App() {
 
 
   useEffect(() => {
-    webSocketRef.current = new WebSocket("ws://localhost:8080");
+    webSocketRef.current = new WebSocket("wss://websocketsimple.glitch.me/");
 
     webSocketRef.current.onopen = (event) => {
       console.log("WebSocket connection opened", event.data);
